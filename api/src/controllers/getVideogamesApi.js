@@ -6,11 +6,12 @@ const getVideogamesApi = async () => {
     const url = `https://api.rawg.io/api/games?key=${API_KEY}`;
     const response = await axios.get(url);
     const videogamesApiRaw = response.data.results;
-    const videogamesApi = videogamesApiRaw.map(({ id, name, background_image, genres }) => ({
+    const videogamesApi = videogamesApiRaw.map(({ id, name, background_image, genres, rating }) => ({
       id,
       name,
       background_image,
-      genres
+      genres,
+      rating
     }));
     return videogamesApi;
   } catch (error) {

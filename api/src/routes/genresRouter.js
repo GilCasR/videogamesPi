@@ -6,7 +6,7 @@ const findAllGenres = require("../controllers/findAllGenres.js")
 const genresRouter = express.Router();
 
 
-// GET /videogames
+// GET /genres
 genresRouter.get('/', async (req, res) => {
     try {
         const genres = await findAllGenres()
