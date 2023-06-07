@@ -1,0 +1,54 @@
+@import url('https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Ubuntu&display=swap');
+
+:root {
+    --melon: #E9AA94ff;
+    --salmon: #DA8673ff;
+    --moonstone: #76ADBEff;
+    --rust: #AA5637ff;
+    --paynes-gray: #4B6979ff;
+    --gunmetal: #2D3A44ff;
+}
+
+
+.searchBarContainer {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+}
+.searchBar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .input {
+    padding: 8px;
+    border: none;
+    background-color: var(--melon);
+    color: var(--gunmetal);
+    font-size: 16px;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .input::placeholder {
+    color: var(--gunmetal);
+  }
+  
+  .button {
+    padding: 8px 16px;
+    background-color: var(--gunmetal);
+    color: white;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    outline: none;
+    transition: background-color 0.3s ease;
+  }
+  
+  .button:hover {
+    background-color: var(--paynes-gray);
+  }
+  

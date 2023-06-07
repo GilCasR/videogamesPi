@@ -1,8 +1,8 @@
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import LandingPage from "./components/landingPage/LandingPage.jsx";
-import Home from "./components/Home.jsx";
-import CreateVideogame from "./components/CreateVideogame.jsx";
-import Detail from "./components/Detail.jsx";
+import Home from "./components/home/Home.jsx";
+import CreateVideogame from "./components/createVideogame/CreateVideogame.jsx";
+import Detail from "./components/detail/Detail.jsx";
 import './App.css';
 
 
