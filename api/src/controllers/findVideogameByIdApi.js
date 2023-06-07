@@ -8,7 +8,7 @@ const findVideogameByIdApi = async (id) => {
     try {
         let response = await axios.get(url);
         let videogameRaw = response.data;
-        let videogame = (({id, name, description, released, genres, developers, background_image, platforms}) => ({id, name, description, released, genres, developers, background_image, platforms}))(videogameRaw);
+        let videogame = (({id, name, description, released, genres, background_image, platforms, ratings}) => ({id, name, description, released, genres, background_image, platforms, ratings}))(videogameRaw);
         if (response.status === 200) {
             return videogame 
         }else {

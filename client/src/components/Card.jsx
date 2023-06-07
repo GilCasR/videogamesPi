@@ -1,24 +1,8 @@
-// import React from "react";
 
-// export default function Card({ name, genres, image }) {
-//     return (
-//       <div>
-//         <img src={image} alt="image not found" />
-//         <h3>{name}</h3>
-//         <div>
-//           {genres.map((genre) => (
-//             <h5 key={genre.id}>{genre.name}</h5>
-//           ))}
-//         </div>
-//       </div>
-//     );
-//   };
-
-
-  // CGTP
   import React from "react";
+  import { Link } from "react-router-dom";
 
-  export default function Card({ name, genres, Genres, image }) {
+  export default function Card({ name, genres, Genres, image, id }) {
     let genreList = [];
   
     if (genres) {
@@ -32,13 +16,15 @@
   
     return (
       <div>
-        <img src={image} alt="image not found" />
-        <h3>{name}</h3>
-        <div>
-          {genreList.map((genre) => (
-            <h5 key={genre.id}>{genre.name}</h5>
-          ))}
-        </div>
+        <Link to ={`/home/${id}`}>
+          <img src={image} alt="image not found" />
+          <h3>{name}</h3>
+          <div>
+            {genreList.map((genre) => (
+              <h5 key={genre.id}>{genre.name}</h5>
+            ))}
+          </div>
+        </Link>
       </div>
     );
   }

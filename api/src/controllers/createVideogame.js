@@ -1,12 +1,13 @@
 const { Videogame, Genre, Platform } = require("../db.js");
 
-const createVideogame = async (name, description, launchDate, rating, genreIds, platformsIds) => {
+const createVideogame = async (name, description, launchDate, rating, image, genreIds, platformsIds) => {
   try {
     const newVideogame = await Videogame.create({
       name,
       description,
       launchDate,
-      rating
+      rating, 
+      image
     });
 
     await newVideogame.addGenres(genreIds);
