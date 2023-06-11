@@ -9,6 +9,10 @@
   --gunmetal: #2D3A44ff;
 }
 
+img{
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .card {
   width: calc(100% - 20px); /* Adjust the width as needed */
   padding: 10px;
@@ -30,24 +34,23 @@
 .cardTitle {
   color: var(--gunmetal);
   font-family: 'Monomaniac One', cursive;
+  font-size: 30px;
+}
+
+h4 {
   font-size: 25px;
-}
-
-.cardGenres {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 10px;
-  margin-top: 10px;
-}
-
-.cardGenres h5 {
+  font-family: 'Monomaniac One';
   color: var(--gunmetal);
-  font-family: 'Monomaniac One', cursive;
-  font-size: 20px;
-  text-align: center;
 }
 
+li {
+  font-size: 20px;
+  font-family: "Monomaniac One";
+}
 
+ul {
+  margin-bottom: 20px;
+}
 
 .card a {
   color: var(--gunmetal);

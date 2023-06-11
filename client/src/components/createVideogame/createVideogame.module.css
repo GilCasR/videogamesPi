@@ -109,8 +109,9 @@
     margin: 10px;
   }
   
-  p {
-    color: var(--rust);
+  p.error {
+    color: var(--gunmetal);
+    font-size: 15px;
     margin: 0;
   }
 

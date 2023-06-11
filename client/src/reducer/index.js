@@ -5,7 +5,9 @@ const initialState = {
   allVideogames: [],
   genres: [],
   platforms: [],
-  detail: []
+  detail: [],
+  currentPage: 1,
+  origin: "all"
 };
   
 const reducer = (state = initialState, action) => {
@@ -27,6 +29,12 @@ const reducer = (state = initialState, action) => {
     case "POST_VIDEOGAME":
       return{
         ...state
+      }
+
+    case "SET_ORIGIN":
+      return{
+        ...state,
+        origin : action.payload
       }
     
     case "GET_GENRES":
@@ -74,6 +82,12 @@ const reducer = (state = initialState, action) => {
         ...state,
         videogames: sortedByRating
       };
+
+    case "SET_CURRENT_PAGE": 
+      return{
+        ...state,
+        currentPage: action.payload
+      }
   
     case "SORT_BY_ALPHABET":
       const alphabetOrder = action.payload;

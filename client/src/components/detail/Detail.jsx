@@ -2,13 +2,15 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getDetail } from "../../actions";
+import { getDetail, setCurrentPage } from "../../actions";
+import { useHistory } from "react-router-dom";
 import LoadingPage from "../loadingPage/LoadingPage.jsx";
 import styles from "./detail.module.css"
 
 export default function Detail(props){
     const id = props.match.params.id
     const dispatch = useDispatch();
+    const history = useHistory();
     useEffect(() => 
         dispatch(getDetail(props.match.params.id)),
       [dispatch]);
@@ -23,9 +25,11 @@ export default function Detail(props){
         apiRatings = videogameDetail.ratings.map((rating) => rating.title);
     };
 
-
-
-    
+    function handleClick(e) {
+        e.preventDefault();
+        dispatch(setCurrentPage(1));
+        history.push("/home");
+    }   
 
     return (
         <div >
@@ -51,9 +55,7 @@ export default function Detail(props){
                             ? videogameDetail.genres.map(genre => genre.name).join(", ") 
                             : videogameDetail.Genres.map(genre => genre.genreName).join(", ")}
                         </h3>
-                        <Link to = "/home">
-                            <button className={styles.button}>Go back</button>
-                        </Link>
+                        <button onClick={(e) => handleClick(e)} className={styles.button}>Go back</button>
                     </div> 
                 </div> 
             }

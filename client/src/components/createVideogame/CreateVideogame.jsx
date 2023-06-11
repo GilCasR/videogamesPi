@@ -4,20 +4,33 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useHistory } from "react-router-dom";
 import { postVideogame, getGenres, getPlatforms } from "../../actions/index.js";
 import styles from "./createVideogame.module.css";
+import LoadingPage from "../loadingPage/LoadingPage.jsx";
 
 const validate = (input) => {
     const errors = {};
+    const today = new Date();
+    const selectedDate = new Date(input.launchDate);
+    const validPastDate = new Date("1950-01-01")
     if (!input.name){
         errors.name = "A name for your videogame is required"
     } else if(!input.description){
         errors.description = "Please provide a breaf description of the videogame"
     } else if(!input.launchDate){
         errors.launchDate = "Please provide a valid launch date"
+    }else if(selectedDate > today){
+        errors.launchDate = "Please provide a date in the past"
+    }else if (selectedDate < validPastDate) {
+        errors.launchDate = "Please provide a date after 1950";
+    }else if(input.rating < 0){
+        errors.rating = "Please provide a valid rating"
+    }else if(input.rating > 5){
+        errors.rating = "Please provide a rating between 0 and 5"
     }else if (!input.genreIds || input.genreIds.length === 0){
         errors.genreIds = "Please select at least one genre"
     }else if (!input.platforms || input.platforms.length === 0){
         errors.platforms = "Please select at least one platform"
-    };
+    }; 
+    console.log(errors);
     return errors;
 };
 
@@ -26,7 +39,7 @@ export default function CreateVideogame(){
       const history = useHistory()
       const platforms = useSelector((state) => state.platforms);
       const genres = useSelector((state) => state.genres);
-      const [errors, setErrors] = useState({})
+      const [errors, setErrors] = useState({});
       
 
       const [input, setInput] = useState({
@@ -42,10 +55,16 @@ export default function CreateVideogame(){
       useEffect(() => {
         dispatch(getGenres());
         dispatch(getPlatforms());
+        setErrors(validate({
+            ...input,
+        }));
       }, []);
 
       const handleSubmit = (e) => {
         e.preventDefault();
+        setInput({
+            ...input,
+        });
         setErrors(validate({
             ...input,
         }));
@@ -70,14 +89,14 @@ export default function CreateVideogame(){
       const handleChange = (e) => {
         setInput({
             ...input,
-            [e.target.name] : e.target.value
+            [e.target.name]: e.target.value
         });
-        console.log(input);
+    
         setErrors(validate({
             ...input,
-            [e.target.name] : e.target.name
+            [e.target.name]: e.target.value
         }));
-        console.log(errors);
+
       };
 
       const handleGenreSelect = (genreId) => {
@@ -136,119 +155,134 @@ export default function CreateVideogame(){
         return platform ? platform.platformName : ""
       };
 
+      if (genres.length === 0 || platforms.length === 0) {
+        return <LoadingPage />;
+      }
+
       return(
-        <div className={styles.container}>
-            <div className={styles.form}>
-                <h1>¡Create a Videogame!</h1>
-                <form onSubmit={e => handleSubmit(e)}>
-                    <div>
-                        <label>Name: </label>
-                        <input 
-                            type = "text"
-                            value = {input.name}
-                            name = "name"
-                            onChange = {handleChange}
-                        />
-                        {errors.name && (
-                            <p>{errors.name}</p>
-                        )}
-                    </div>
-                    <div className={styles.descriptionContainer}>
-                        <label htmlFor="description">Description:</label>
-                        <textarea
-                            value={input.description}
-                            name="description"
-                            onChange={handleChange}
-                            className={styles.descriptionInput}
-                        />
-                        {errors.description && (
-                            <p>{errors.description}</p>
-                        )}
-                    </div>
-                    <div>
-                        <label>Launch Date: </label>
-                        <input 
-                            type = "date"
-                            value = {input.launchDate}
-                            name = "launchDate"
-                            onChange = {handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Rating: </label>
-                        <input 
-                            type="number" 
-                            step="0.1"
-                            value = {input.rating}
-                            name = "rating"
-                            onChange = {handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Image: </label>
-                        <input 
-                            type="text" 
-                            value = {input.image}
-                            name = "image"
-                            onChange = {handleChange}
-                        />
-                    </div>
-                    <div>
-                        <label>Genre: </label>
-                        <select onChange={e => handleGenreSelect(e.target.value)}>
-                            {genres.map((genre) => (
-                                <option value={genre.id}>{genre.genreName}</option>
-                            ))}
-                        </select>
-                        {errors.genreIds && (
-                            <p>{errors.genreIds}</p>
-                        )}
-                    </div>
-                    <div>
-                        <label>Platform: </label>
-                        <select onChange={e => handlePlatformSelect(e.target.value)}>
-                            {platforms.map((platform) => (
-                                <option value={platform.id}>{platform.platformName}</option>
-                            ))}
-                        </select>
-                        {errors.platforms && (
-                            <p>{errors.platforms}</p>
-                        )}
-                    </div>
-                    <div className={styles.list}>
-                        <h3>Genres:</h3>
-                        <br/>
-                        <ul>
-                            {input.genreIds.map((genreId) => {
-                            const genreName = getGenreName(genreId);
-                            return (<div>
-                                    <li key={genreId}>{genreName}</li>
-                                    <button onClick={() => {handleGenreDelete(genreId)}}>X</button>
-                                </div>
-                                );
-                            })}
-                        </ul>
-                    </div>
-                    <div className={styles.list}>
-                        <h3>Platforms:</h3>
-                        <ul>
-                            {input.platforms.map((platformId) => {
-                                const platformName = getPlatformName(platformId);
-                                return(
-                                    <div >
-                                        <li key={platformId}>{platformName}</li> 
-                                        <button onClick={() => {handlePlatformDelete(platformId)}}>X</button>
+        <div>
+            {genres.length === 0 || platforms.length === 0 ? (
+                <LoadingPage />
+            ) : (
+            <div className={styles.container}>
+                <div className={styles.form}>
+                    <h1>¡Create a Videogame!</h1>
+                    <form onSubmit={e => handleSubmit(e)}>
+                        <div>
+                            <label>Name: </label>
+                            <input 
+                                type = "text"
+                                value = {input.name}
+                                name = "name"
+                                onChange = {handleChange}
+                            />
+                            {errors.name && (
+                                <p className={styles.error} >{errors.name}</p>
+                            )}
+                        </div>
+                        <div className={styles.descriptionContainer}>
+                            <label htmlFor="description">Description:</label>
+                            <textarea
+                                value={input.description}
+                                name="description"
+                                onChange={handleChange}
+                                className={styles.descriptionInput}
+                            />
+                            {errors.description && (
+                                <p className={styles.error}>{errors.description}</p>
+                            )}
+                        </div>
+                        <div>
+                            <label>Launch Date: </label>
+                            <input 
+                                type = "date"
+                                value = {input.launchDate}
+                                name = "launchDate"
+                                onChange = {handleChange}
+                            />
+                            {errors.launchDate && (
+                                <p className={styles.error}>{errors.launchDate}</p>
+                            )}
+                        </div>
+                        <div>
+                            <label>Rating: </label>
+                            <input 
+                                type="number" 
+                                step="0.1"
+                                value = {input.rating}
+                                name = "rating"
+                                onChange = {handleChange}
+                            />
+                            {errors.rating && (
+                                <p className={styles.error} >{errors.rating}</p>
+                            )}
+                        </div>
+                        <div>
+                            <label>Image: </label>
+                            <input 
+                                type="text" 
+                                value = {input.image}
+                                name = "image"
+                                onChange = {handleChange}
+                            />
+                        </div>
+                        <div>
+                            <label>Genre: </label>
+                            <select onChange={e => handleGenreSelect(e.target.value)}>
+                                {genres.map((genre) => (
+                                    <option value={genre.id}>{genre.genreName}</option>
+                                ))}
+                            </select>
+                            {errors.genreIds && (
+                                <p className={styles.error}>{errors.genreIds}</p>
+                            )}
+                        </div>
+                        <div>
+                            <label>Platform: </label>
+                            <select onChange={e => handlePlatformSelect(e.target.value)}>
+                                {platforms.map((platform) => (
+                                    <option value={platform.id}>{platform.platformName}</option>
+                                ))}
+                            </select>
+                            {errors.platforms && (
+                                <p className={styles.error}>{errors.platforms}</p>
+                            )}
+                        </div>
+                        <div className={styles.list}>
+                            <h3>Genres:</h3>
+                            <br/>
+                            <ul>
+                                {input.genreIds.map((genreId) => {
+                                const genreName = getGenreName(genreId);
+                                return (<div>
+                                        <li key={genreId}>{genreName}</li>
+                                        <button onClick={() => {handleGenreDelete(genreId)}}>X</button>
                                     </div>
-                                ) 
-                            })}
-                        </ul>
-                    </div>
-                    <div>
-                        <button type="submit">Create videogame</button>
-                    </div>
-                </form>
-            </div>
-            <Link to="/home"> <button>Go Back</button> </Link>
+                                    );
+                                })}
+                            </ul>
+                        </div>
+                        <div className={styles.list}>
+                            <h3>Platforms:</h3>
+                            <ul>
+                                {input.platforms.map((platformId) => {
+                                    const platformName = getPlatformName(platformId);
+                                    return(
+                                        <div >
+                                            <li key={platformId}>{platformName}</li> 
+                                            <button onClick={() => {handlePlatformDelete(platformId)}}>X</button>
+                                        </div>
+                                    ) 
+                                })}
+                            </ul>
+                        </div>
+                        <div>
+                            <button type="submit">Create videogame</button>
+                        </div>
+                    </form>
+                </div>
+                <Link to="/home"> <button>Go Back</button> </Link>
+            </div> )}
         </div>
       )
 };

@@ -7,7 +7,7 @@ const createVideogame = async (name, description, launchDate, rating, image, gen
       description,
       launchDate,
       rating, 
-      image
+      image,
     });
 
     await newVideogame.addGenres(genreIds);

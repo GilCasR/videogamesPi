@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
+import { useState } from "react";
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { getVideogamesByName } from "../../actions";
+import { getVideogamesByName, setCurrentPage, setOrigin } from "../../actions";
 import styles from "./searchBar.module.css"
 export default function SearchBar(){
     const dispatch = useDispatch();
@@ -15,11 +16,12 @@ export default function SearchBar(){
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        dispatch(setCurrentPage(1));
         dispatch(getVideogamesByName(name));
+        dispatch(setOrigin("search"));
     }
 
     return (
-        <div className={styles.container}>
           <div className={styles.searchBarContainer}>
             <input
               type="text"
@@ -27,10 +29,9 @@ export default function SearchBar(){
               placeholder="Search..."
               onChange={handleInputChange}
             />
-            <button type="submit" className={styles.button} onClick={handleSubmit}>
+            <button type="submit" className={styles.searchButton} onClick={handleSubmit}>
               Search
             </button>
           </div>
-        </div>
       );
 }

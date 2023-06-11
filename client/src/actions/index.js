@@ -86,3 +86,17 @@ export function sortByAlphabet (payload){
         payload
     };
 };
+
+export function setCurrentPage(payload){
+    return {
+      type: "SET_CURRENT_PAGE",
+      payload
+    };
+  };
+
+export function setOrigin(payload){
+    return {
+        type: "SET_ORIGIN",
+        payload
+    };
+};

@@ -52,6 +52,11 @@
     border-radius: 5px;
     text-align: justify; /* Align the text to the center */
 }
+
+p {
+    font-size: 24px;
+    color: var(--gunmetal);
+}
   
 .button {
     display: inline-block;

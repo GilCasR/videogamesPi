@@ -1,20 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Monomaniac+One&family=Ubuntu&display=swap');
 
-:root {
-    --melon: #E9AA94ff;
-    --salmon: #DA8673ff;
-    --moonstone: #76ADBEff;
-    --rust: #AA5637ff;
-    --paynes-gray: #4B6979ff;
-    --gunmetal: #2D3A44ff;
-}
+
 
 
 .searchBarContainer {
   display: flex;
   justify-content: center;
-  margin-bottom: 20px;
+  align-items: center;
 }
+
 .searchBar {
     display: flex;
     align-items: center;
@@ -30,25 +24,30 @@
     border-radius: 4px;
     outline: none;
     transition: background-color 0.3s ease;
+    height: 32px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   
   .input::placeholder {
     color: var(--gunmetal);
   }
   
-  .button {
-    padding: 8px 16px;
-    background-color: var(--gunmetal);
-    color: white;
+  .searchButton {
+    display: inline-block;
+    padding: 6px 12px; 
+    background-color: var(--melon);
+    color: var(--gunmetal);
+    text-decoration: none;
+    font-size: 14px; 
     border: none;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 4px;
-    outline: none;
+    border-radius: 5px;
     transition: background-color 0.3s ease;
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   
-  .button:hover {
-    background-color: var(--paynes-gray);
+  .searchButton:hover {
+    background-color: var(--gunmetal);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   }
   
