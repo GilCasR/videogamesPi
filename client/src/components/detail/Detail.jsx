@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getDetail, setCurrentPage } from "../../actions";
@@ -12,7 +11,7 @@ export default function Detail(props){
     const dispatch = useDispatch();
     const history = useHistory();
     useEffect(() => 
-        dispatch(getDetail(props.match.params.id)),
+        dispatch(getDetail(id)),
       [dispatch]);
 
     const videogameDetail = useSelector((state) => state.detail);

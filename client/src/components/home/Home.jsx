@@ -104,6 +104,7 @@ export default function Home (){
               <div className={styles.header}>
                 <h1 className={styles.heading}>Henry Videogames PI</h1>
                 <Link to="/videogame" className={styles.button}>Create Videogame</Link>
+                <Link to="/about" className={styles.button}>About</Link>
               </div>
               <div className={styles["filter-container"]}>
                 <div>
